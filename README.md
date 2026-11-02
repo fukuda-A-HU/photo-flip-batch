@@ -33,4 +33,4 @@ python3 -m http.server 8000
 
 ## 公開
 
-GitHub Pages で公開しています。配信設定は `.github/workflows/pages.yml` です。
+GitHub Pages で、`main` ブランチのルートを配信します。
