@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="フォルダ内の写真をブラウザだけで上下・左右に反転し、ZIPでまとめて保存します。">
+  <title>写真一括反転</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230f766e'/%3E%3Cpath d='M4 8h8M8 4l4 4-4 4' fill='none' stroke='white' stroke-width='1.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow">ブラウザだけで処理</p>
+      <h1>写真一括反転</h1>
+      <p class="lead">フォルダの画像をまとめて上下・左右に反転し、ZIPでダウンロードします。画像はサーバーへ送信されません。</p>
+    </header>
+
+    <section
+      class="drop"
+      id="dropzone"
+      tabindex="0"
+      role="button"
+      aria-controls="folder"
+    >
+      <svg class="drop-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h3.2l1.6 2H18.5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2v-8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      </svg>
+      <p class="drop-title">フォルダをドロップ<br>またはクリックして選択</p>
+      <p class="drop-sub">JPEG、PNG、WebP、GIF（静止画）</p>
+    </section>
+    <input id="folder" class="file-input" type="file" webkitdirectory directory multiple accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif">
+
+    <section class="panel" aria-labelledby="flip-heading">
+      <h2 id="flip-heading">反転</h2>
+      <div class="options">
+        <label>
+          <input type="checkbox" id="flip-v">
+          上下反転
+        </label>
+        <label>
+          <input type="checkbox" id="flip-h">
+          左右反転
+        </label>
+      </div>
+      <p class="hint">両方選ぶと、上下と左右の両方を適用します。プレビューも同じ向きになります。GIF は PNG で保存します。</p>
+    </section>
+
+    <div class="actions">
+      <p id="summary">画像がまだ選択されていません</p>
+      <div class="action-buttons">
+        <button id="clear" type="button" class="ghost" hidden>選択をクリア</button>
+        <button id="download" type="button" disabled>反転して ZIP をダウンロード</button>
+      </div>
+    </div>
+    <progress id="progress" hidden max="1" value="0"></progress>
+    <p id="status" role="status" aria-live="polite"></p>
+    <p id="fallback" hidden><a id="fallback-link" download="反転画像.zip">ZIP を再ダウンロード</a></p>
+    <ul id="grid" class="grid"></ul>
+  </main>
+  <noscript>
+    <p class="noscript">このアプリには JavaScript が必要です。</p>
+  </noscript>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
